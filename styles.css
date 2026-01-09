@@ -173,6 +173,120 @@ header i {
   padding: 8px 15px;
 }
 
+#expenses-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.expense-item {
+  background: #f1f9f9;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.expense-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.expense-info h3 {
+  font-size: 1rem;
+  color: #264653;
+  margin-bottom: 5px;
+}
+
+.expense-info p {
+  font-size: 0.85rem;
+  color: #333;
+  margin: 3px 0;
+}
+
+.expense-amount {
+  font-weight: bold;
+  color: #2a9d8f;
+  margin-bottom: 8px;
+}
+
+.expense-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.expense-actions .btn-edit {
+  background-color: #f4a261;
+  color: white;
+  font-size: 0.75rem;
+  padding: 5px 10px;
+}
+
+.expense-actions .btn-edit:hover {
+  background-color: #e76f51;
+}
+
+.expense-actions .btn-danger {
+  background-color: #e63946;
+  color: white;
+  font-size: 0.75rem;
+  padding: 5px 10px;
+}
+
+.expense-actions .btn-danger:hover {
+  background-color: #c1121f;
+}
+
+
+.pagination {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  background-color: #2a9d8f;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #21867a;
+}
+
+@media (max-width: 768px) {
+  #expenses-list {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  .expense-actions {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  #expenses-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+
 @media (max-width: 768px) {
   .search-section {
     flex-direction: column;
