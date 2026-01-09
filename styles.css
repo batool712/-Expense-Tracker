@@ -77,4 +77,90 @@ header h1 {
 header i {
   margin-right: 10px;
 }
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.8rem;
+  }
 
+  .summary-cards {
+    gap: 15px;
+  }
+
+  .summary-cards .card {
+    flex: 1 1 45%;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.5rem;
+    flex-direction: column;
+  }
+
+  .summary-cards .card {
+    flex: 1 1 100%;
+    padding: 12px;
+  }
+
+  @media (max-width: 768px) {
+  header h1 {
+    font-size: 1.8rem;
+  }
+
+  header p.funny-line {
+    font-size: 0.9rem;
+  }
+
+  .summary-cards .card {
+    flex: 1 1 45%;
+    padding: 15px;
+    gap: 8px;
+  }
+
+  .summary-cards .card i {
+    font-size: 1.5rem;
+  }
+
+  .summary-cards h3 {
+    font-size: 0.9rem;
+  }
+
+  .summary-cards p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.5rem;
+    flex-direction: column;
+  }
+
+  header p.funny-line {
+    font-size: 0.85rem;
+  }
+
+  .summary-cards {
+    gap: 10px;
+  }
+
+  .summary-cards .card {
+    flex: 1 1 100%;
+    padding: 12px;
+    gap: 5px;
+  }
+
+  .summary-cards .card i {
+    font-size: 1.2rem;
+  }
+
+  .summary-cards h3 {
+    font-size: 0.85rem;
+  }
+
+  .summary-cards p {
+    font-size: 0.95rem;
+  }
+}
+}
