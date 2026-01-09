@@ -150,6 +150,55 @@ header i {
   flex-wrap: wrap;
 }
 
+.search-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.search-section input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.search-section input:focus {
+  border-color: #2a9d8f;
+  outline: none;
+}
+
+#search-btn {
+  padding: 8px 15px;
+}
+
+@media (max-width: 768px) {
+  .search-section {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-section input,
+  .search-section select,
+  .search-section button {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-section input,
+  .search-section select,
+  .search-section button {
+    font-size: 0.85rem;
+    padding: 6px;
+  }
+}
+
+
+
 @media (max-width: 768px) {
   .form-section {
     padding: 15px;
@@ -175,77 +224,15 @@ header i {
     flex-direction: column; 
     gap: 8px;
   }
+
 }
-
-@media (max-width: 480px) {
-  .form-section {
-    padding: 10px;
-  }
-}
-
-@media (max-width: 768px) {
-  header h1 {
-    font-size: 1.8rem;
-  }
-
-  .summary-cards {
-    gap: 15px;
-  }
-
-  .summary-cards .card {
-    flex: 1 1 45%;
-    padding: 15px;
-  }
-}
-
-
-
 @media (max-width: 480px) {
   header h1 {
     font-size: 1.5rem;
     flex-direction: column;
   }
 
-  .summary-cards .card {
-    flex: 1 1 100%;
-    padding: 12px;
-  }
-
-  @media (max-width: 768px) {
-  header h1 {
-    font-size: 1.8rem;
-  }
-
-  header p.funny-line {
-    font-size: 0.9rem;
-  }
-
-  .summary-cards .card {
-    flex: 1 1 45%;
-    padding: 15px;
-    gap: 8px;
-  }
-
-  .summary-cards .card i {
-    font-size: 1.5rem;
-  }
-
-  .summary-cards h3 {
-    font-size: 0.9rem;
-  }
-
-  .summary-cards p {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  header h1 {
-    font-size: 1.5rem;
-    flex-direction: column;
-  }
-
-  header p.funny-line {
+  .tagline  {
     font-size: 0.85rem;
   }
 
@@ -266,9 +253,4 @@ header i {
   .summary-cards h3 {
     font-size: 0.85rem;
   }
-
-  .summary-cards p {
-    font-size: 0.95rem;
-  }
-}
 }
