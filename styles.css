@@ -76,7 +76,80 @@ header h1 {
 
 header i {
   margin-right: 10px;
+
 }
+
+
+.form-section {
+  background-color: #f0f4f8;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.form-section h2 {
+  color: #264653;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #264653;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #2a9d8f;
+  outline: none;
+}
+
+.btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #2a9d8f;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #21867a;
+}
+
+.btn-secondary {
+  background-color:#2a9d8f; 
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color:#21867a ;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 @media (max-width: 768px) {
   header h1 {
     font-size: 1.8rem;
