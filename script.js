@@ -273,5 +273,5 @@ async function DisplayfilterExpenses(page = 1) {
   }
 }
 
-fetchAndDisplayExpenses(page = 1);
+fetchAndDisplayExpenses( 1);
 
