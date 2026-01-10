@@ -1,10 +1,10 @@
 // DOM element
 const expenseslist = document.getElementById("expenses-list");
-
-
-
-
-
+const expenseForm = document.getElementById("expense-form");
+const expenseName = document.getElementById("expense-name");
+const expenseDate = document.getElementById("expense-date");
+const expenseAmount = document.getElementById("expense-amount");
+const expenseDescription = document.getElementById("expense-description");
 
 
 const BASE_API_URL = "https://pennypath-server.vercel.app/api/v1/expenses";
@@ -71,5 +71,42 @@ document.getElementById("prev-btn").addEventListener("click", () => {
   if (currentPage > 1) currentPage--;
   fetchAndDisplayExpenses(currentPage);
 });
+
+
+// add new expense
+
+expenseForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  
+  const newExpense = {
+    name: expenseName.value,
+    date: expenseDate.value,
+    amount: parseFloat(expenseAmount.value),
+    description: expenseDescription.value
+  };
+
+  try {
+    const res = await fetch(BASE_API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newExpense)
+    });
+
+    if (!res.ok) throw new Error("Failed to add expense");
+
+    const data = await res.json();
+    alert("Expense added successfully");
+
+    expenseForm.reset();
+
+
+    fetchAndDisplayExpenses(currentPage);
+
+  } catch (error) {
+    console.error(error);
+    alert(error.message);
+  }
+});
+
 
 fetchAndDisplayExpenses(currentPage);
