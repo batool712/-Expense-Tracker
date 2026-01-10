@@ -5,12 +5,16 @@ const expenseName = document.getElementById("expense-name");
 const expenseDate = document.getElementById("expense-date");
 const expenseAmount = document.getElementById("expense-amount");
 const expenseDescription = document.getElementById("expense-description");
+const deleteModal = document.getElementById("delete-modal");
+const confirmDeleteBtn = document.getElementById("confirm-delete");
+const cancelBtn = document.getElementById("cancel-delete");
 
 
 const BASE_API_URL = "https://pennypath-server.vercel.app/api/v1/expenses";
 
 let currentPage = 1;
 const itemsPerPage = 6;
+let currentDeleteId = null;
 
 
 async function fetchAndDisplayExpenses(page = 1) {
@@ -105,6 +109,28 @@ expenseForm.addEventListener("submit", async (e) => {
   } catch (error) {
     console.error(error);
     alert(error.message);
+  }
+});
+
+//delete 
+function deleteExpense(id) {
+  currentDeleteId = id;
+  deleteModal.style.display = "flex";
+}
+
+   cancelBtn.addEventListener("click", () => {
+  deleteModal.style.display = "none";
+});
+
+    confirmDeleteBtn.addEventListener("click", async () => {
+  try {
+    const res = await fetch(`${BASE_API_URL}/${currentDeleteId}`, { method: "DELETE" });
+    if (!res.ok) throw new Error("Failed to delete expense");
+    deleteModal.style.display = "none";
+    fetchAndDisplayExpenses(currentPage);
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
   }
 });
 
