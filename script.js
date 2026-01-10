@@ -9,12 +9,21 @@ const deleteModal = document.getElementById("delete-modal");
 const confirmDeleteBtn = document.getElementById("confirm-delete");
 const cancelBtn = document.getElementById("cancel-delete");
 
+const editModal = document.getElementById("edit-modal");
+const editForm = document.getElementById("edit-form");
+const editName = document.getElementById("edit-name");
+const editAmount = document.getElementById("edit-amount");
+const editDate = document.getElementById("edit-date");
+const editDescription = document.getElementById("edit-description");
+
 
 const BASE_API_URL = "https://pennypath-server.vercel.app/api/v1/expenses";
-
+let expenses = [];
 let currentPage = 1;
 const itemsPerPage = 6;
 let currentDeleteId = null;
+let currentEditId = null;
+
 
 
 async function fetchAndDisplayExpenses(page = 1) {
@@ -24,7 +33,7 @@ async function fetchAndDisplayExpenses(page = 1) {
     if (!response.ok) throw new Error("Failed to fetch expenses from server.");
 
     const jsonData = await response.json();
-    const expenses = jsonData.data.expenses; 
+    expenses = jsonData.data.expenses; 
     const totalPages = jsonData.data.totalPages;
 
 
@@ -133,6 +142,54 @@ function deleteExpense(id) {
     alert(err.message);
   }
 });
+   // edit 
+   function editExpense(id) {
+  const expense = expenses.find(exp => exp.id === id);
+  if (!expense) return;
 
+  currentEditId = id;
+
+  editName.value = expense.name;
+  editAmount.value = expense.amount;
+  editDate.value = new Date(expense.date).toISOString().slice(0,10);
+  editDescription.value = expense.description || "";
+   editModal.style.display = "flex";
+}
+document.getElementById("edit-close").addEventListener("click", () => {
+  editModal.style.display = "none";
+  currentEditId = null;
+  editForm.reset();
+});
+editForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (!currentEditId) return;
+
+  const updatedExpense = {
+    name: editName.value,
+    amount: parseFloat(editAmount.value),
+    date: editDate.value,
+    description: editDescription.value
+  };
+
+  try {
+    const res = await fetch(`${BASE_API_URL}/${currentEditId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedExpense)
+    });
+
+    if (!res.ok) throw new Error("Failed to update expense");
+
+    editModal.style.display = "none";
+    currentEditId = null;
+    editForm.reset();
+
+    fetchAndDisplayExpenses(currentPage);
+
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+});
 
 fetchAndDisplayExpenses(currentPage);
