@@ -15,6 +15,15 @@ const editName = document.getElementById("edit-name");
 const editAmount = document.getElementById("edit-amount");
 const editDate = document.getElementById("edit-date");
 const editDescription = document.getElementById("edit-description");
+const prevbtn = document.getElementById("prev-btn");
+const nextbtn = document.getElementById("next-btn");
+const searchName = document.getElementById("search-name");
+const searchMonth = document.getElementById("search-month");
+const searchBtn = document.getElementById("search-btn");
+const totalExpensesEl = document.getElementById("total-expenses");
+const filteredTotal = document.getElementById("filtered-total");
+
+
 
 
 const BASE_API_URL = "https://pennypath-server.vercel.app/api/v1/expenses";
@@ -23,6 +32,8 @@ let currentPage = 1;
 const itemsPerPage = 6;
 let currentDeleteId = null;
 let currentEditId = null;
+let currentSearch = '';
+let currentMonth = '';
 
 
 
@@ -67,8 +78,8 @@ async function fetchAndDisplayExpenses(page = 1) {
     });
 
 
-    document.getElementById("prev-btn").disabled = page <= 1;
-    document.getElementById("next-btn").disabled = page >= totalPages;
+    prevbtn.disabled = page <= 1;
+    nextbtn.disabled = page >= totalPages;
 
   } catch (error) {
     console.error(error);
@@ -192,4 +203,75 @@ editForm.addEventListener("submit", async (e) => {
   }
 });
 
-fetchAndDisplayExpenses(currentPage);
+// search
+
+searchBtn.addEventListener("click", () => {
+  currentSearch = searchName.value.trim();
+  currentMonth = searchMonth.value;
+  currentPage = 1; 
+  DisplayfilterExpenses(currentPage);
+});
+
+
+async function DisplayfilterExpenses(page = 1) {
+  try {
+    
+    let url = `${BASE_API_URL}?limit=${itemsPerPage}&page=${page}`;
+
+    if (currentSearch) url += `&search=${encodeURIComponent(currentSearch)}`;
+
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Failed to fetch expenses from server.");
+
+    const jsonData = await response.json();
+    let fetchedExpenses = jsonData.data.expenses;
+    const totalPages = jsonData.data.totalPages;
+
+    if (currentMonth) {
+      const [year, month] = currentMonth.split('-'); 
+      fetchedExpenses = fetchedExpenses.filter(exp => {
+        const expDate = new Date(exp.date);
+        return expDate.getFullYear() === parseInt(year) && (expDate.getMonth() + 1) === parseInt(month);
+      });
+    }
+
+    expenses = fetchedExpenses; 
+
+    if (expenses.length === 0) {
+      expenseslist.innerHTML = "<p>No expenses found.</p>";
+      return;
+    }
+
+    expenseslist.innerHTML = "";
+    expenses.forEach(expense => {
+      const card = document.createElement("div");
+      card.className = "expense-card";
+      card.innerHTML = `
+        <h3>${expense.name}</h3>
+        <p class="expense-amount">$${expense.amount.toFixed(2)}</p>
+        <p>${new Date(expense.date).toLocaleDateString()}</p>
+        <p>${expense.description || "-"}</p>
+        <div class="expense-actions">
+          <button class="icon-btn btn-edit" onclick="editExpense('${expense.id}')">
+            <i class="fa-solid fa-pen"></i>
+          </button>
+          <button class="icon-btn btn-delete" onclick="deleteExpense('${expense.id}')">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      `;
+      expenseslist.appendChild(card);
+    });
+
+   
+    prevbtn.disabled = page <= 1;
+   nextbtn.disabled = page >= totalPages;
+
+  } catch (error) {
+    console.error(error);
+    alert(error.message);
+  }
+}
+
+fetchAndDisplayExpenses(page = 1);
+
